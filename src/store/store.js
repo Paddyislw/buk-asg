@@ -1,7 +1,9 @@
 import { reactive } from "vue";
 import { ETHERIUM_BLOCKCHAIN, POLYGON_BLOCKCHAIN } from "../utils/Constants";
 
+//Creating a reactive store object
 export const store = reactive({
+  // Initial state properties
   currentBlockChain: POLYGON_BLOCKCHAIN,
   accountAddress: undefined,
   currentBlockChainBalance: undefined,
@@ -9,6 +11,8 @@ export const store = reactive({
   isError: { status: false, msg: "" },
   isLoading: false,
   isSucces: false,
+
+  // Methods
   toggleCurrentBlockChain() {
     if (this.currentBlockChain === ETHERIUM_BLOCKCHAIN) {
       this.currentBlockChain = POLYGON_BLOCKCHAIN;
@@ -16,7 +20,6 @@ export const store = reactive({
       this.accountAddress = "";
       this.currentBlockChainBalance = "";
     } else {
-
       this.currentBlockChain = ETHERIUM_BLOCKCHAIN;
       this.currentChanId = "";
       this.accountAddress = "";
