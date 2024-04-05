@@ -4,7 +4,7 @@ import { ETHERIUM_BLOCKCHAIN, POLYGON_BLOCKCHAIN } from "../utils/Constants";
 //Creating a reactive store object
 export const store = reactive({
   // Initial state properties
-  currentBlockChain: POLYGON_BLOCKCHAIN,
+  currentBlockChain: "",
   accountAddress: undefined,
   currentBlockChainBalance: undefined,
   currentChanId: undefined,
@@ -25,6 +25,12 @@ export const store = reactive({
       this.accountAddress = "";
       this.currentBlockChainBalance = "";
     }
+  },
+  updateCurrentBlockChain(currentBlockChain) {
+    this.currentBlockChain = currentBlockChain;
+    this.currentChanId = "";
+    this.accountAddress = "";
+    this.currentBlockChainBalance = "";
   },
   updateAccountAddress(accountAddress) {
     this.accountAddress = accountAddress;

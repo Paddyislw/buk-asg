@@ -1,5 +1,6 @@
 import { store } from "../store/store";
 import { ethers } from "ethers";
+import { ETHERIUM_BLOCKCHAIN, POLYGON_BLOCKCHAIN } from "../utils/Constants";
 
 /**
  * Function to fetch balance for a given provider and network.
@@ -60,4 +61,22 @@ export const getMaticBalance = async () => {
     "https://polygon-rpc.com"
   );
   await fetchBalance(providerPolygon, "Polygon");
+};
+
+/**
+ * The function getCurrentNetworkId asynchronously retrieves the current network ID using the Ethereum
+ * API and updates the current blockchain based on the response.
+ */
+export const getCurrentNetworkId = async () => {
+  try {
+    const response = await window.ethereum.request({ method: "eth_chainId" });
+    if (response === "0x1") {
+      store.updateCurrentBlockChain(ETHERIUM_BLOCKCHAIN);
+    } else {
+      store.updateCurrentBlockChain(POLYGON_BLOCKCHAIN);
+    }
+    console.log(response)
+  } catch (error) {
+    console.error("Some error occured while getting current network");
+  }
 };

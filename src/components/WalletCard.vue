@@ -27,6 +27,28 @@ const fetchDetailsHandler = () => {
         }
     }
 }
+
+// Function to switch to the Polygon blockchain
+const polygonChange = async () => {
+    // Request to switch to the Polygon blockchain
+    await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x89' }],
+    });
+    // Update the current blockchain to Polygon in the store
+    store.updateCurrentBlockChain(POLYGON_BLOCKCHAIN)
+}
+
+// Function to switch to the Ethereum blockchain
+const etheriumChange = async () => {
+    // Request to switch to the Ethereum blockchain
+    await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x1' }],
+    });
+    // Update the current blockchain to Ethereum in the store
+    store.updateCurrentBlockChain(ETHERIUM_BLOCKCHAIN)
+} 
 </script>
 
 <template>
@@ -46,12 +68,23 @@ const fetchDetailsHandler = () => {
             <div class="border-2 border-gray-400 shadow-xl p-4 rounded-lg">
                 <p class="text-lg font-semibold">Wallet Information : {{ store.currentBlockChain }}</p>
                 <div class="flex gap-2">
-                    <button @click="store.toggleCurrentBlockChain()"
-                        class="bg-gray-300 px-3 py-2 text-gray-700 rounded mt-2 text-sm font-semibold">Toggle
-                        BlockChain</button>
+                    
+                    <div class="flex items-center gap-2 mr-2">
+                        <div class="border-2 w-4 h-4 rounded-full p-1 "
+                            :class="{ 'bg-blue-500': iscurrentBlockChainEtherium }" @click="etheriumChange">
+                        </div>
+                        <label for="ethereum">Ethereum</label>
+                        <div class="border-2 w-4 h-4 rounded-full p-1 "
+                            :class="{ 'bg-blue-500': iscurrentBlockChainPolygon }" @click="polygonChange">
+
+                        </div>
+                        <label for="polygon">Polygon</label>
+                    </div>
+
                     <button @click="fetchDetailsHandler"
                         class="bg-gray-300 px-3 py-2 text-gray-700 rounded mt-2 text-sm font-semibold">Fetch
                         Details</button>
+
                 </div>
                 <div v-if="store.isLoading"
                     class="border-4 w-12 h-12 border-t-gray-500 rounded-full animate-spin my-4 ml-2"></div>
